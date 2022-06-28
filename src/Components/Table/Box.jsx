@@ -59,7 +59,7 @@ function Box(props) {
                       <span class="path6"></span>
                     </span>
                   </div>
-                  {/* <span className="info">{data.status.có}</span> */}
+                  <span className="info">{data.status.available}</span>
                 </div>
 
                 <div className="no-empty">
@@ -80,7 +80,7 @@ function Box(props) {
                       <span class="path13"></span>
                     </span>
                   </div>
-                  {/* <span className="info">{data.status.chưa}</span> */}
+                  <span className="info">{data.status.in_order}</span>
                 </div>
 
                 <div className="ordering">
@@ -96,7 +96,7 @@ function Box(props) {
                       <span class="path8"></span>
                     </span>
                   </div>
-                  {/* <span className="info">{data.status.đặt}</span> */}
+                  <span className="info">{data.status.in_use}</span>
                 </div>
               </div>
             )}
@@ -122,18 +122,20 @@ function Box(props) {
                               <>
                                 {item.status === "available" ? (
                                   <Grid item xs={0.6}>
-                                    <div className="shelf empty">{item.id}</div>
+                                    <div className="shelf empty">
+                                      {item.position}
+                                    </div>
                                   </Grid>
                                 ) : item.status === "Chưa" ? (
                                   <Grid item xs={0.6}>
                                     <div className="shelf no-empty">
-                                      {item.id}
+                                      {item.position}
                                     </div>
                                   </Grid>
                                 ) : (
                                   <Grid item xs={0.6}>
                                     <div className="shelf ordering">
-                                      {item.id}
+                                      {item.position}
                                     </div>
                                   </Grid>
                                 )}
@@ -152,18 +154,20 @@ function Box(props) {
                               <>
                                 {item.status === "available" ? (
                                   <Grid item xs={0.6}>
-                                    <div className="shelf empty">{item.id}</div>
+                                    <div className="shelf empty">
+                                      {item.position}
+                                    </div>
                                   </Grid>
                                 ) : item.status === "Chưa" ? (
                                   <Grid item xs={0.6}>
                                     <div className="shelf no-empty">
-                                      {item.id}
+                                      {item.position}
                                     </div>
                                   </Grid>
                                 ) : (
                                   <Grid item xs={0.6}>
                                     <div className="shelf ordering">
-                                      {item.id}
+                                      {item.position}
                                     </div>
                                   </Grid>
                                 )}
