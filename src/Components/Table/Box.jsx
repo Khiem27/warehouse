@@ -1,27 +1,19 @@
 import Boxc from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "75%",
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+  outline: "none",
+  borderRadius: "10px",
 };
 
 function Box(props) {
@@ -29,21 +21,24 @@ function Box(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { gido, newArr, isActive, data } = props;
+
   useEffect(() => {
     const node = document.querySelectorAll(".box-wrap");
     if (isActive) {
       node[gido].classList.add("active");
     }
   }, [isActive, gido]);
+
+  if (data) {
+    console.log(data.shelve_1.items);
+  }
+
   const handleClick = (input) => {
     if (input) {
       newArr.push(input);
       console.log(input);
-      setOpen(!open);
+      handleOpen();
     }
-    // for (let index = input + 24; index < input + 29; index++) {
-    //   node[index].classList.add("active");
-    // }
   };
 
   return (
@@ -64,7 +59,7 @@ function Box(props) {
                       <span class="path6"></span>
                     </span>
                   </div>
-                  <span className="info">{data.status.có}</span>
+                  {/* <span className="info">{data.status.có}</span> */}
                 </div>
 
                 <div className="no-empty">
@@ -85,7 +80,7 @@ function Box(props) {
                       <span class="path13"></span>
                     </span>
                   </div>
-                  <span className="info">{data.status.chưa}</span>
+                  {/* <span className="info">{data.status.chưa}</span> */}
                 </div>
 
                 <div className="ordering">
@@ -101,28 +96,89 @@ function Box(props) {
                       <span class="path8"></span>
                     </span>
                   </div>
-                  <span className="info">{data.status.đặt}</span>
+                  {/* <span className="info">{data.status.đặt}</span> */}
                 </div>
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Boxc sx={style}>
-                    {open && (
-                      <div>
-                        <h1>{data.vitri}</h1>
-                        <h2>{data.vitri}</h2>
-                        <button onClick={handleClose}>Cancel</button>
-                      </div>
-                    )}
-                  </Boxc>
-                </Modal>
               </div>
             )}
           </div>
         </div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Boxc sx={style}>
+            {open && (
+              <>
+                <div className="shelfs">
+                  <div className="shelfs-wrap">
+                    <div className="shelf-first">
+                      <span style={{ width: "5%" }}>Kệ 1</span>
+                      <Grid container spacing={0}>
+                        {data.shelve_1 &&
+                          data.shelve_1.items.map((item, index) => {
+                            return (
+                              <>
+                                {item.status === "available" ? (
+                                  <Grid item xs={0.6}>
+                                    <div className="shelf empty">{item.id}</div>
+                                  </Grid>
+                                ) : item.status === "Chưa" ? (
+                                  <Grid item xs={0.6}>
+                                    <div className="shelf no-empty">
+                                      {item.id}
+                                    </div>
+                                  </Grid>
+                                ) : (
+                                  <Grid item xs={0.6}>
+                                    <div className="shelf ordering">
+                                      {item.id}
+                                    </div>
+                                  </Grid>
+                                )}
+                              </>
+                            );
+                          })}
+                      </Grid>
+                    </div>
+
+                    <div className="shelf-first">
+                      <span style={{ width: "5%" }}>Kệ 2</span>
+                      <Grid container spacing={0}>
+                        {data.shelve_2 &&
+                          data.shelve_2.items.map((item, index) => {
+                            return (
+                              <>
+                                {item.status === "available" ? (
+                                  <Grid item xs={0.6}>
+                                    <div className="shelf empty">{item.id}</div>
+                                  </Grid>
+                                ) : item.status === "Chưa" ? (
+                                  <Grid item xs={0.6}>
+                                    <div className="shelf no-empty">
+                                      {item.id}
+                                    </div>
+                                  </Grid>
+                                ) : (
+                                  <Grid item xs={0.6}>
+                                    <div className="shelf ordering">
+                                      {item.id}
+                                    </div>
+                                  </Grid>
+                                )}
+                              </>
+                            );
+                          })}
+                      </Grid>
+                    </div>
+                  </div>
+                </div>
+                {/* <button onClick={handleClose}>Cancel</button> */}
+              </>
+            )}
+          </Boxc>
+        </Modal>
       </Grid>
     </>
   );
